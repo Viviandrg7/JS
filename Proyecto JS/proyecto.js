@@ -93,7 +93,7 @@ function renderProducts(arr) {
       const productPrice = document.createElement('p');
       productPrice.innerText = '$' + product.price;
       const productName = document.createElement('p');
-      productName.innerText = product.name;
+      productName.innerText = product.names;
     
       productInfoDiv.appendChild(productPrice);
       productInfoDiv.appendChild(productName);
