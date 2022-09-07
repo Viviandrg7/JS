@@ -6,21 +6,26 @@ const menuHamIcon = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 //Menu carrito
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
-const aside = document.querySelector('.product-detail');
+const shoppingCartCo = document.querySelector('.shoppingCartContainer');
 //Productos
-const contenedorProductos = document.querySelector('.cards-container');
+const cardsContainer = document.querySelector('.cards-container');
+const productDetailContainer = document.querySelector('.product-detail');
+const closeProductDetail = document.querySelector('.product-detail-close');
+
 
 //Menu del Correo
 menuEmail.addEventListener('click', toggleDesktopMenu);
 function toggleDesktopMenu(){
-    aside.classList.add('inactive');
+    shoppingCartCo.classList.add('inactive');
+    productDetailContainer.classList.add('inactive')
     desktopMenu.classList.toggle('inactive');
 }
 
 //Menu mobile
 menuHamIcon.addEventListener('click', toogleMobileMenu);
 function toogleMobileMenu(){
-    aside.classList.add('inactive');
+    shoppingCartCo.classList.add('inactive');
+    productDetailContainer.classList.add('inactive')
     mobileMenu.classList.toggle('inactive')
 }
 
@@ -29,10 +34,11 @@ menuCarritoIcon.addEventListener('click', toogleCarritoAside);
 function toogleCarritoAside(){
     mobileMenu.classList.add('inactive');
     desktopMenu.classList.add('inactive');
-    aside.classList.toggle('inactive')
+    productDetailContainer.classList.add('inactive')
+    shoppingCartCo.classList.toggle('inactive')
 }
 
-//productos
+//PRODUCTOS
 //Este es un array
 const productList = [];
 //con esto mandamos información al array
@@ -67,10 +73,72 @@ productList.push({
     image: 'https://m.media-amazon.com/images/I/71oWnakbENL._AC_UL320_.jpg'
   })
 
+  //PRODUCTOS
+function renderProducts(arr) {
+    for (product of arr) {
+      const productCard = document.createElement('div');
+      productCard.classList.add('product-card');
+      productCard.addEventListener('click', productDetailAsaid);
+    
+      // product= {name, price, image} -> product.image
+      const productImg = document.createElement('img');
+      productImg.setAttribute('src', product.image);
+      
+    
+      const productInfo = document.createElement('div');
+      productInfo.classList.add('product-info');
+    
+      const productInfoDiv = document.createElement('div');
+    
+      const productPrice = document.createElement('p');
+      productPrice.innerText = '$' + product.price;
+      const productName = document.createElement('p');
+      productName.innerText = product.name;
+    
+      productInfoDiv.appendChild(productPrice);
+      productInfoDiv.appendChild(productName);
+    
+      const productInfoFigure = document.createElement('figure');
+      const productImgCart = document.createElement('img');
+      productImgCart.setAttribute('src', './icons/bt_add_to_cart.svg');
+    
+      productInfoFigure.appendChild(productImgCart);
+    
+      productInfo.appendChild(productInfoDiv);
+      productInfo.appendChild(productInfoFigure);
+    
+      productCard.appendChild(productImg);
+      productCard.appendChild(productInfo);
+    
+      cardsContainer.appendChild(productCard);
+    }
+  }
+  
+  function productDetailAsaid(){
+    mobileMenu.classList.add('inactive');
+    desktopMenu.classList.add('inactive');
+    shoppingCartCo.classList.add('inactive');
+    productDetailContainer.classList.remove('inactive')
+  }
+
+  renderProducts(productList);
+
+closeProductDetail.addEventListener('click', cerrarProductDetail);
+function cerrarProductDetail(){
+    productDetailContainer.classList.add('inactive')
+}
 
 
+/*prueba loca
+const body = document.querySelector('body');
+body.addEventListener('click', bodyPrueba);
+function bodyPrueba(){
+    mobileMenu.classList.add('inactive');
+    desktopMenu.classList.add('inactive');
+} */
 
 //con esto accedemos a cada producto del array el of trae el elemento del array que indequemos
+/*
 for (product of productList){
     producto = `<div class="product-card">
     <img src=${product.image} alt="">
@@ -84,17 +152,5 @@ for (product of productList){
       </figure>
     </div>
   </div> `
-  contenedorProductos.innerHTML += producto;
-
-}
-
-
-
-/*prueba loca
-const body = document.querySelector('body');
-body.addEventListener('click', bodyPrueba);
-function bodyPrueba(){
-    mobileMenu.classList.add('inactive');
-    desktopMenu.classList.add('inactive');
-} */
-
+  contenedorProductos.innerHTML += producto; 
+}*/
